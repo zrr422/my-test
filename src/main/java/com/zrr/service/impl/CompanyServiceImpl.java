@@ -111,6 +111,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         }
 
         try {
+            company.setApplicationTime(formatter.format(currentTime));
             company.setCreateTime(formatter.format(currentTime));
             company.setIsDel(0);
             company.setAuditStatus(2);

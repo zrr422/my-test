@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 @TableName(value = "student",autoResultMap = true)
 public class Student {
     @JSONField(serializeUsing = ToStringSerializer.class)//解决ID传入前台精度丢失问题
-    @TableId(value = "user_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
+    @TableId(value = "stu_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
     private Long stuId;
 
     @NotNull(message = "学生名不能为空")

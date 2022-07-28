@@ -32,7 +32,7 @@ public class StudentController {
      * @return
      */
     @GetMapping("/getStudent")
-    public Object getStudent(String stuName, String minBirthday, String maxBirthday, Integer page, Integer limit){
+    public Object getStudent(String stuName, String minBirthday, String maxBirthday,@RequestParam Integer page,@RequestParam Integer limit){
         IPage<Student> ipage = service.getStudent(stuName,minBirthday,maxBirthday,page,limit);
         List<Student> data = ipage.getRecords(); // 当前页的数据
         int total = (int) ipage.getTotal();
