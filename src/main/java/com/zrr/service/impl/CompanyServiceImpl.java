@@ -156,7 +156,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
 
             return Result.success("保存成功",company);
         } catch (Exception e) {
-            log.error("Company indert Exception error:{}", JSONObject.toJSONString(e));
+            log.error("Company insert Exception error:{}", JSONObject.toJSONString(e));
             e.printStackTrace();
             return Result.failed("保存失败");
         }
@@ -238,7 +238,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
         defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
         defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             if (arr[i] > 128) {
                 try {
                     String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);

@@ -26,7 +26,7 @@ import javax.validation.constraints.Pattern;
 @TableName(value = "company",autoResultMap = true)
 public class Company {
     @JSONField(serializeUsing = ToStringSerializer.class)//解决ID传入前台精度丢失问题
-    @TableId(value = "user_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
+    @TableId(value = "company_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
     private Long companyId;
 
     @NotNull(message = "企业名称不能为空")

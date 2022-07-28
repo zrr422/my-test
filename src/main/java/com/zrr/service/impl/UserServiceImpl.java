@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zrr.entity.User;
+import com.zrr.entity.Users;
 import com.zrr.mapper.UserMapper;
 import com.zrr.service.UserService;
 import com.zrr.uitl.Result;
@@ -25,7 +25,7 @@ import java.util.Date;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements UserService {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Date currentTime = new DateTime(System.currentTimeMillis());
 
@@ -40,9 +40,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public IPage<User> getUser(String userName, Integer page, Integer limit) {
-        Page<User> p = new Page<>(page, limit); //page,limit
-        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+    public IPage<Users> getUser(String userName, Integer page, Integer limit) {
+        Page<Users> p = new Page<>(page, limit); //page,limit
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<Users>();
         if (!StringUtils.isEmpty(userName)) {
             queryWrapper.like("user_name", userName);
         }
@@ -57,7 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public Result<User> insertUser(User user) {
+    public Result<Users> insertUser(Users user) {
         user.setCreateTime(formatter.format(currentTime));
         user.setIsDel(0);
         mapper.insert(user);
@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public Result<User> updateUser(User user) {
+    public Result<Users> updateUser(Users user) {
         user.setUpdateTime(formatter.format(currentTime));
         mapper.updateById(user);
         return Result.success("修改成功",user);
@@ -82,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public Result<User> deleteUser(Integer userId) {
+    public Result<Users> deleteUser(Integer userId) {
         mapper.deleteById(userId);
         return Result.success("删除成功",userId);
     }

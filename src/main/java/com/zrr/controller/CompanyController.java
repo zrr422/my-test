@@ -31,7 +31,7 @@ public class CompanyController {
      * @return
      */
     @GetMapping("/getCompany")
-    public Object getCompany(String companyName, Integer page, Integer limit){
+    public Object getCompany(String companyName,@RequestParam Integer page,@RequestParam Integer limit){
         IPage<Company> ipage = service.getCompany(companyName,page,limit);
         List<Company> data = ipage.getRecords(); // 当前页的数据
         int total = (int) ipage.getTotal();

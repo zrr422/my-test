@@ -1,7 +1,7 @@
 package com.zrr.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zrr.entity.User;
+import com.zrr.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Description: 用户持久层
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<Users> {
 }

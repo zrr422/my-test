@@ -2,8 +2,7 @@ package com.zrr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zrr.entity.Student;
-import com.zrr.entity.User;
+import com.zrr.entity.Users;
 import com.zrr.uitl.Result;
 
 /**
@@ -12,7 +11,7 @@ import com.zrr.uitl.Result;
  * @ClassName: UserService
  * @Description: 用户实现层接口
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<Users> {
     /**
      * 用户分页查询
      * @param userName
@@ -20,26 +19,26 @@ public interface UserService extends IService<User> {
      * @param limit
      * @return
      */
-    IPage<User> getUser(String userName, Integer page, Integer limit);
+    IPage<Users> getUser(String userName, Integer page, Integer limit);
 
     /**
      *用户添加
      * @param user
      * @return
      */
-    Result<User> insertUser(User user);
+    Result<Users> insertUser(Users user);
 
     /**
      *用户修改
      * @param user
      * @return
      */
-    Result<User> updateUser(User user);
+    Result<Users> updateUser(Users user);
 
     /**
      *用户删除
      * @param userId
      * @return
      */
-    Result<User> deleteUser(Integer userId);
+    Result<Users> deleteUser(Integer userId);
 }

@@ -1,6 +1,7 @@
 package com.zrr.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -56,6 +57,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
 
         queryWrapper.orderByDesc("create_time");
+        log.info("Student stu :{}", JSONObject.toJSONString(queryWrapper));
         return mapper.selectPage(p, queryWrapper);
     }
 

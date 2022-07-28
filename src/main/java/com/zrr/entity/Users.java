@@ -23,8 +23,8 @@ import javax.validation.constraints.Pattern;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName(value = "user",autoResultMap = true)
-public class User {
+@TableName(value = "users",autoResultMap = true)
+public class Users {
     @JSONField(serializeUsing = ToStringSerializer.class)//解决ID传入前台精度丢失问题
     @TableId(value = "user_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
     private Long userId;

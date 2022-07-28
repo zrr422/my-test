@@ -1,7 +1,7 @@
 package com.zrr.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zrr.entity.User;
+import com.zrr.entity.Users;
 import com.zrr.service.UserService;
 import com.zrr.uitl.Result;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +30,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/getUser")
-    public Object getUser(String userName, Integer page, Integer limit){
-        IPage<User> ipage = service.getUser(userName,page,limit);
-        List<User> data = ipage.getRecords(); // 当前页的数据
+    public Object getUser(String userName,@RequestParam Integer page,@RequestParam Integer limit){
+        IPage<Users> ipage = service.getUser(userName,page,limit);
+        List<Users> data = ipage.getRecords(); // 当前页的数据
         int total = (int) ipage.getTotal();
         return Result.success("查询成功",data,total);
 
@@ -44,7 +44,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/insertUser")
-    public Result<User> insertUser(@Valid @RequestBody User user) {
+    public Result<Users> insertUser(@Valid @RequestBody Users user) {
         return service.insertUser(user);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/updateUser")
-    public Result<User> updateUser(@Valid @RequestBody User user) {
+    public Result<Users> updateUser(@Valid @RequestBody Users user) {
         return service.updateUser(user);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/deleteUser")
-    public Result<User> deleteUser(Integer userId) {
+    public Result<Users> deleteUser(Integer userId) {
         return service.deleteUser(userId);
     }
 
