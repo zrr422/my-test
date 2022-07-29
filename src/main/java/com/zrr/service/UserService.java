@@ -21,6 +21,8 @@ public interface UserService extends IService<Users> {
      */
     IPage<Users> getUser(String userName, Integer page, Integer limit);
 
+    Result<Users> getUserById(Long userId);
+
     /**
      *用户添加
      * @param user

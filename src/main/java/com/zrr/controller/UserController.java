@@ -39,6 +39,16 @@ public class UserController {
     }
 
     /**
+     * 根据用户ID查看用户详细信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getUserById")
+    public Result<Users> getUserById(Long userId) {
+        return service.getUserById(userId);
+    }
+
+    /**
      * 添加用户
      * @param user
      * @return

@@ -51,6 +51,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
         return mapper.selectPage(p, queryWrapper);
     }
 
+    @Override
+    public Result<Users> getUserById(Long userId) {
+        Users data = mapper.selectById(userId);
+        return Result.success("查询成功",data);
+    }
+
     /**
      * 添加用户
      * @param user

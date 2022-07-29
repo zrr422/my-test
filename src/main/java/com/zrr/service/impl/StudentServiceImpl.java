@@ -61,6 +61,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return mapper.selectPage(p, queryWrapper);
     }
 
+    @Override
+    public Result<Student> getStuById(Long stuId) {
+        Student byId = mapper.selectById(stuId);
+        return Result.success("查询成功",byId);
+    }
+
     /**
      * 添加学生
      * @param stu

@@ -23,6 +23,9 @@ public interface StudentService extends IService<Student> {
      */
     IPage<Student> getStudent(String stuName,String minBirthday,String maxBirthday, Integer page, Integer limit);
 
+
+    Result<Student> getStuById(Long stuId);
+
     /**
      *学生添加
      * @param stu

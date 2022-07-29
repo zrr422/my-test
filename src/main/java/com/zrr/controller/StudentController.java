@@ -41,6 +41,16 @@ public class StudentController {
     }
 
     /**
+     * 根据学生ID查看学生详细信息
+     * @param stuId
+     * @return
+     */
+    @GetMapping("/getStuById")
+    public Result<Student> getStuById(Long stuId) {
+        return service.getStuById(stuId);
+    }
+
+    /**
      * 添加学生
      * @param stu
      * @return
