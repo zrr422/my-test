@@ -64,6 +64,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Result<Student> getStuById(Long stuId) {
         Student byId = mapper.selectById(stuId);
+        log.info("Student getById student :{}", JSONObject.toJSONString(stuId));
         return Result.success("查询成功",byId);
     }
 
@@ -77,6 +78,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         stu.setCreateTime(formatter.format(currentTime));
         stu.setIsDel(0);
         mapper.insert(stu);
+        log.info("Student insert student :{}", JSONObject.toJSONString(stu));
         return Result.success("添加成功",stu);
     }
 
@@ -89,6 +91,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public Result<Student> updateStu(Student stu) {
         stu.setUpdateTime(formatter.format(currentTime));
         mapper.updateById(stu);
+        log.info("Student update student :{}", JSONObject.toJSONString(stu));
         return Result.success("修改成功",stu);
     }
 
@@ -98,8 +101,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
      * @return
      */
     @Override
-    public Result<Student> deleteStu(Integer stuId) {
+    public Result<Student> deleteStu(Long stuId) {
         mapper.deleteById(stuId);
+        log.info("Student delete student :{}", JSONObject.toJSONString(stuId));
         return Result.success("删除成功",stuId);
     }
 }

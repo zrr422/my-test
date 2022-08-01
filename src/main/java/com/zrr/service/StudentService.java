@@ -45,5 +45,5 @@ public interface StudentService extends IService<Student> {
      * @param stuId
      * @return
      */
-    Result<Student> deleteStu(Integer stuId);
+    Result<Student> deleteStu(Long stuId);
 }

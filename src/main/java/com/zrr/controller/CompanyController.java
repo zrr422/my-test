@@ -75,7 +75,7 @@ public class CompanyController {
      * @return
      */
     @PostMapping("/deleteCompany")
-    public Result<Company> deleteCompany(Integer companyId) {
+    public Result<Company> deleteCompany(Long companyId) {
         return service.deleteCompany(companyId);
     }
 

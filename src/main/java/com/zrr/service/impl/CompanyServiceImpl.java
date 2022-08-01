@@ -5,12 +5,10 @@ import cn.hutool.core.date.DateTime;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zrr.entity.AuditLog;
 import com.zrr.entity.Company;
-import com.zrr.entity.Student;
 import com.zrr.mapper.AuditLogMapper;
 import com.zrr.mapper.CompanyMapper;
 import com.zrr.service.CompanyService;
@@ -61,11 +59,12 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public IPage<Company> getCompany(String companyName, Integer page, Integer limit) {
         Page<Company> p = new Page<>(page, limit); //page,limit
         QueryWrapper<Company> queryWrapper = new QueryWrapper<Company>();
-        if (!StringUtils.isEmpty(companyName)) {
+        if (companyName!=null && !companyName.equals("")) {
             queryWrapper.like("company_name", companyName);
         }
 
         queryWrapper.orderByDesc("create_time");
+        log.info("Company if company :{}", JSONObject.toJSONString(queryWrapper));
         return mapper.selectPage(p, queryWrapper);
     }
 
@@ -78,6 +77,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     @Override
     public Result<Company> getCompanyById(Long companyId) {
         Company data = mapper.selectById(companyId);
+        log.info("Company getById company :{}", JSONObject.toJSONString(data));
         return Result.success("查询成功",data);
     }
 
@@ -94,6 +94,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         objectQueryWrapper.orderByDesc("audit_time", "application_time");
         objectQueryWrapper.last("limit 20");
         List<AuditLog> data = logMapper.selectList(objectQueryWrapper);
+        log.info("Company update company :{}", JSONObject.toJSONString(data));
         return Result.success("查询成功",data);
     }
 
@@ -131,6 +132,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             }
 
             mapper.insert(company);
+            log.info("Company insert company :{}", JSONObject.toJSONString(company));
 
             //添加审核记录
             HashMap<Object, Object> map = new HashMap<>();
@@ -172,6 +174,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public Result<Company> updateCompany(Company company) {
         company.setUpdateTime(formatter.format(currentTime));
         mapper.updateById(company);
+        log.info("Company update company :{}", JSONObject.toJSONString(company));
         return Result.success("修改成功", company);
     }
 
@@ -184,9 +187,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     @Override
     public Result<Company> auditPass(Company company) {
         try {
-//            VehicleEnterprise data = new VehicleEnterprise();
             company.setAuditTime(formatter.format(currentTime));
-            log.info("VehicleEnterprise data :{}", JSONObject.toJSONString(company));
+            log.info("Company data :{}", JSONObject.toJSONString(company));
             mapper.updateById(company);
 
             Company byId = mapper.selectById(company.getCompanyId());
@@ -195,14 +197,10 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             if (company.getAuditStatus().equals(0)) {
                 auditLog.setRemark("企业审核通过");
                 log.info("Company auditLog status = 0 :{}", JSONObject.toJSONString(auditLog));
-                logMapper.insert(auditLog);
             } else if (company.getAuditStatus().equals(1)) {
                 auditLog.setRemark("企业【" + byId.getCompanyName() + "】审核失败，失败原因：" + byId.getRemark());
                 log.info("Company auditLog status = 1 :{}", JSONObject.toJSONString(auditLog));
-                logMapper.insert(auditLog);
             }
-//            AuditLog auditLog =
-//                    BeanUtil.toBean(company, AuditLog.class);
             //修改日志
             auditLog.setCompanyId(company.getCompanyId());
             log.info("Company auditPass auditLog :{}", JSONObject.toJSONString(company));
@@ -222,8 +220,9 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
      * @return
      */
     @Override
-    public Result<Company> deleteCompany(Integer companyId) {
+    public Result<Company> deleteCompany(Long companyId) {
         mapper.deleteById(companyId);
+        log.info("Company delete company :{}", JSONObject.toJSONString(companyId));
         return Result.success("删除成功", companyId);
     }
 

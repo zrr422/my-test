@@ -64,5 +64,5 @@ public interface CompanyService extends IService<Company> {
          * @param companyId
          * @return
          */
-        Result<Company> deleteCompany(Integer companyId);
+        Result<Company> deleteCompany(Long companyId);
 }

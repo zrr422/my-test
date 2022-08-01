@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -25,6 +26,8 @@ import javax.validation.constraints.Pattern;
 @Accessors(chain = true)
 @TableName(value = "company",autoResultMap = true)
 public class Company {
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @JSONField(serializeUsing = ToStringSerializer.class)//解决ID传入前台精度丢失问题
     @TableId(value = "company_id", type = IdType.ASSIGN_ID)//ID使用雪花算法生成
     private Long companyId;
@@ -36,6 +39,7 @@ public class Company {
 
     @NotNull(message = "企业社会信用代码不能为空")
     private String companyTaxpayer;
+
     private String companyLicense;
 
     @NotNull(message = "企业联系人不能为空")

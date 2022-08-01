@@ -1,6 +1,7 @@
 package com.zrr.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -54,6 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     @Override
     public Result<Users> getUserById(Long userId) {
         Users data = mapper.selectById(userId);
+        log.info("Users getById users :{}", JSONObject.toJSONString(userId));
         return Result.success("查询成功",data);
     }
 
@@ -67,6 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
         user.setCreateTime(formatter.format(currentTime));
         user.setIsDel(0);
         mapper.insert(user);
+        log.info("Users insert users :{}", JSONObject.toJSONString(user));
         return Result.success("添加成功",user);
     }
 
@@ -79,6 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     public Result<Users> updateUser(Users user) {
         user.setUpdateTime(formatter.format(currentTime));
         mapper.updateById(user);
+        log.info("Users update users :{}", JSONObject.toJSONString(user));
         return Result.success("修改成功",user);
     }
 
@@ -88,8 +92,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
      * @return
      */
     @Override
-    public Result<Users> deleteUser(Integer userId) {
+    public Result<Users> deleteUser(Long userId) {
         mapper.deleteById(userId);
+        log.info("Users delete users :{}", JSONObject.toJSONString(userId));
         return Result.success("删除成功",userId);
     }
 }

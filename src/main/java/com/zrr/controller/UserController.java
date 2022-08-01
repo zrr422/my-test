@@ -74,7 +74,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/deleteUser")
-    public Result<Users> deleteUser(Integer userId) {
+    public Result<Users> deleteUser(Long userId) {
         return service.deleteUser(userId);
     }
 

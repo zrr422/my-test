@@ -76,7 +76,7 @@ public class StudentController {
      * @return
      */
     @PostMapping("/deleteStu")
-    public Result<Student> deleteStu(Integer stuId) {
+    public Result<Student> deleteStu(Long stuId) {
         return service.deleteStu(stuId);
     }
 }
