@@ -59,8 +59,9 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public IPage<Company> getCompany(String companyName, Integer page, Integer limit) {
         Page<Company> p = new Page<>(page, limit); //page,limit
         QueryWrapper<Company> queryWrapper = new QueryWrapper<Company>();
-        if (companyName!=null && !companyName.equals("")) {
+        if (companyName != null && !companyName.equals("")) {
             queryWrapper.like("company_name", companyName);
+            log.info("Company if companyName :{}", JSONObject.toJSONString(queryWrapper));
         }
 
         queryWrapper.orderByDesc("create_time");
@@ -78,7 +79,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public Result<Company> getCompanyById(Long companyId) {
         Company data = mapper.selectById(companyId);
         log.info("Company getById company :{}", JSONObject.toJSONString(data));
-        return Result.success("查询成功",data);
+        return Result.success("查询成功", data);
     }
 
     /**
@@ -94,8 +95,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         objectQueryWrapper.orderByDesc("audit_time", "application_time");
         objectQueryWrapper.last("limit 20");
         List<AuditLog> data = logMapper.selectList(objectQueryWrapper);
-        log.info("Company update company :{}", JSONObject.toJSONString(data));
-        return Result.success("查询成功",data);
+        log.info("AuditLog getByCompanyId AuditLog :{}", JSONObject.toJSONString(data));
+        return Result.success("查询成功", data);
     }
 
     /**
@@ -156,7 +157,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             //新增一条日志
             logMapper.insert(auditLog);
 
-            return Result.success("保存成功",company);
+            return Result.success("保存成功", company);
         } catch (Exception e) {
             log.error("Company insert Exception error:{}", JSONObject.toJSONString(e));
             e.printStackTrace();
@@ -188,14 +189,15 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     public Result<Company> auditPass(Company company) {
         try {
             company.setAuditTime(formatter.format(currentTime));
-            log.info("Company data :{}", JSONObject.toJSONString(company));
+            log.info("Company auditPass data :{}", JSONObject.toJSONString(company));
             mapper.updateById(company);
 
             Company byId = mapper.selectById(company.getCompanyId());
 
-            AuditLog auditLog = new AuditLog();
+            AuditLog auditLog =
+                    BeanUtil.toBean(company, AuditLog.class);
             if (company.getAuditStatus().equals(0)) {
-                auditLog.setRemark("企业审核通过");
+                auditLog.setRemark("企业【" + byId.getCompanyName() + "】审核通过");
                 log.info("Company auditLog status = 0 :{}", JSONObject.toJSONString(auditLog));
             } else if (company.getAuditStatus().equals(1)) {
                 auditLog.setRemark("企业【" + byId.getCompanyName() + "】审核失败，失败原因：" + byId.getRemark());
@@ -206,7 +208,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             log.info("Company auditPass auditLog :{}", JSONObject.toJSONString(company));
             logMapper.insert(auditLog);
 
-            return Result.success("保存成功",company);
+            return Result.success("保存成功", company);
         } catch (Exception e) {
             log.error("Company auditPass Exception :{}", JSONObject.toJSONString(e));
             return Result.failed("保存失败");
@@ -228,6 +230,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
 
     /**
      * 获取企业名称前五个汉子拼音首字母
+     *
      * @param companyName
      * @return
      */

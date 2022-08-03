@@ -49,6 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
         }
 
         queryWrapper.orderByDesc("create_time");
+        log.info("Users if users :{}", JSONObject.toJSONString(queryWrapper));
         return mapper.selectPage(p, queryWrapper);
     }
 

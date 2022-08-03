@@ -57,7 +57,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
 
         queryWrapper.orderByDesc("create_time");
-        log.info("Student stu :{}", JSONObject.toJSONString(queryWrapper));
+        log.info("Student if stu :{}", JSONObject.toJSONString(queryWrapper));
         return mapper.selectPage(p, queryWrapper);
     }
 
